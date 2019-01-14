@@ -45,10 +45,10 @@ class NippoCountController extends Controller
     protected function getPosts($target_ymd)
     {
         $client = new \GuzzleHttp\Client();
-        $url = 'https://api.esa.io/v1/teams/REPLACE_YOUR_TEAM/posts';
+        $url = 'https://api.esa.io/v1/teams/' . config('nippo.esa.team') . '/posts';
         $res = $client->get($url,[
             'query'=>[
-                'access_token' => 'REPLACE_YOUR_ACCESS_TOKEN',
+                'access_token' => config('nippo.esa.access_token'),
                 'q' => 'in:日報/'.$target_ymd,
                 'include' => 'stargazers',
                 'per_page' => 100,
