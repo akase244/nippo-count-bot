@@ -1,41 +1,42 @@
 # nippo-count-bot
 
-esa¤Î¡ÖÆüÊó/YYYY/MM/DD/¡×ÇÛ²¼¤Ë½ñ¤«¤ì¤¿³Æ¥á¥ó¥Ð¡¼¤ÎÁ°Æü¤ÎÆüÊó¤ò¼èÆÀ¤·¡¢¥¿¥¤¥È¥ë¤È¥¹¥¿¡¼¤ò²Ä»ë²½¤·¤Æ·îÍËÆü¡Á¶âÍËÆü¤Î12»þ¤ËSlack¤ËÅê¹Æ¤¹¤ëbot¤Ç¤¹¡£
+esaã®ã€Œæ—¥å ±/YYYY/MM/DD/ã€é…ä¸‹ã«æ›¸ã‹ã‚ŒãŸå„ãƒ¡ãƒ³ãƒãƒ¼ã®å‰æ—¥ã®æ—¥å ±ã‚’å–å¾—ã—ã€ã‚¿ã‚¤ãƒˆãƒ«ã¨ã‚¹ã‚¿ãƒ¼ã‚’å¯è¦–åŒ–ã—ã¦æœˆæ›œæ—¥ã€œé‡‘æ›œæ—¥ã®12æ™‚ã«Slackã«æŠ•ç¨¿ã™ã‚‹botã§ã™ã€‚
 
-°Ê²¼¤Î²Õ½ê¤ò´Ä¶­¤Ë±þ¤¸¤Æ½ñ¤­´¹¤¨¤Æ¤¯¤À¤µ¤¤¡£
+ä»¥ä¸‹ã®ç®‡æ‰€ã‚’ç’°å¢ƒã«å¿œã˜ã¦æ›¸ãæ›ãˆã¦ãã ã•ã„ã€‚
 
-- `app/Console/Commands/NippoCount.php`
+- `.env.example`
 
+æ—¥å ±ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ç¨¼åƒã•ã›ã‚‹ã‚µãƒ¼ãƒãƒ¼ã®ãƒ›ã‚¹ãƒˆåã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
 ```
-public function handle()
-{
-      ¡¦
-      ¡¦
-      $url = 'http://REPLACE_YOUR_HOST_NAME/count/'.$target_ymd; // REPLACE POINT
-      ¡¦
-      ¡¦
-      $url = 'https://hooks.slack.com/services/REPLACE_YOUR_TOKEN'; // REPLACE POINT
-      ¡¦
-      ¡¦
-}
+NIPPO_COUNT_HOST_NAME=REPLACE_YOUR_NIPPO_COUNT_HOST_NAME
 ```
 
-- `app/Http/Controllers/NippoCountController.php`
+Slacké€šçŸ¥ã‚’è¡Œã†ãŸã‚ã®HOOKç”¨ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
+```
+SLACK_HOOK_TOKEN=REPLACE_YOUR_SLACK_HOOK_TOKEN
+```
+
+esaã®ãƒãƒ¼ãƒ åã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚
+```
+ESA_TEAM_NAME=REPLACE_YOUR_ESA_TEAM_NAME
+```
+
+esaã®APIå‘¼ã³å‡ºã—ã‚’è¡Œã†ãŸã‚ã®ã‚¢ã‚¯ã‚»ã‚¹ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å…¥åŠ›ã—ã¦ã ã•ã„ã€‚
+```
+ESA_ACCESS_TOKEN=REPLACE_YOUR_ESA_ACCESS_TOKEN
+```
+
+ä½¿ã„æ–¹
+```
+$ cp .env.example .env
+$ php artisan key:generate
+```
+
+æœˆæ›œã€œé‡‘æ›œã®12æ™‚ã«å®Ÿè¡Œã™ã‚‹ã‚ˆã†ã«ã—ã¦ã„ã‚‹ã®ã§æ™‚é–“ã‚’å¤‰æ›´ã™ã‚‹å ´åˆã¯ä»¥ä¸‹ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚
+
+- `app/Console/Kernel.php`
 
 ```
-protected function getPosts($target_ymd)
-{
-    ¡¦
-    ¡¦
-    $url = 'https://api.esa.io/v1/teams/REPLACE_YOUR_TEAM/posts'; // REPLACE POINT
-    $res = $client->get($url,[
-        'query'=>[
-            'access_token' => 'REPLACE_YOUR_ACCESS_TOKEN', // REPLACE POINT
-            ¡¦
-            ¡¦
-        ],
-    ]);
-    ¡¦
-    ¡¦
-}
+$schedule->command('nippo_count')
+         ->cron('0 12 * * 1-5');
 ```
