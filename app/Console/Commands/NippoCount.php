@@ -45,12 +45,12 @@ class NippoCount extends Command
                 // 実行日が月曜日の場合は3日前(金曜日)の日付を取得
                 $target_ymd = date('Ymd', strtotime('-3 day'));
             }
-            $url = 'http://REPLACE_YOUR_HOST_NAME/count/'.$target_ymd;
+            $url = 'http://' . config('nippo.host') . '/count/'.$target_ymd;
             $client = new \GuzzleHttp\Client();
             $res = $client->get($url);
             $body = json_decode($res->getBody());
 
-            $url = 'https://hooks.slack.com/services/REPLACE_YOUR_TOKEN';
+            $url = 'https://hooks.slack.com/services/' . config('nippo.slack.hook_token');
             $req = $client->post($url,[
                 'body' => json_encode([
                     'channel' => '#nippo',
